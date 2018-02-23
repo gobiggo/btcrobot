@@ -93,7 +93,7 @@ def auto_query_coin_price(msg):
     """
     if not judge_pure_english(msg):
         return
-    if msg == '__help':
+    if msg == '--help':
         return '<交易对>/<交易所>/<功能>/<功能参数>\n交易对:<基础货币>_<报价货币>\n交易所:HB,BA,OK,ZB,CMC\n功能:PRICE/DEPTH\n功能参数:limit=10/50/100'
 
     logger.info(msg)
@@ -116,7 +116,7 @@ def test():
     print(auto_query_coin_price('/EOSBTC/OK/PRICE'))
     print(auto_query_coin_price('BTC/CMC/PRICE'))
     print(auto_query_coin_price('NAS'))
-    print(auto_query_coin_price('__help'))
+    print(auto_query_coin_price('--help'))
     print(auto_query_coin_price('NASETH/HB'))
     print(auto_query_coin_price('NASETH/HB/DEPTH'))
     print(auto_query_coin_price('中文试试'))
