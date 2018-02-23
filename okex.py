@@ -64,7 +64,7 @@ class OKEX:
 
                 if 'date' in objs:
                     _time = objs['date']
-                    _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(long(_time))))
+                    _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(_time))))
                 return _map
             return "cannot query the price of %s from okex" % _symbol
         else:

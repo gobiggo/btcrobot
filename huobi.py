@@ -32,7 +32,7 @@ class HuoBi:
             coin_market = symbol + 'usdt'
 
         #print coin_market
-        objs = get_trade(string.replace(coin_market, '_', ''))
+        objs = get_trade(coin_market.replace('_', ''))
         #print objs
 
         """
@@ -80,7 +80,7 @@ class HuoBi:
                 _map = _map + _tmp
             if 'ts' in jsonobj:
                 _time = jsonobj['ts']
-                _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(long(_time) / 1000)))
+                _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(_time) / 1000)))
             return _map
         else:
             return "cannot query the price of %s from huobi" % coin_market

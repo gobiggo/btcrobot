@@ -59,7 +59,7 @@ class ZB:
 
             if 'date' in objs:
                 _time = objs['date']
-                _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(long(_time)/1000)))
+                _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(_time)/1000)))
             return _map
         else:
             return "cannot query the price of %s from zb" % _symbol

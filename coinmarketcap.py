@@ -13,7 +13,8 @@ class CoinMarketCap:
 
     # @cache
     def get_coin_price_api(self, symbol):
-        coin_id = COIN_SYMBOL_ID.get(symbol.upper(symbol.strip(symbol)))
+        # coin_id = COIN_SYMBOL_ID.get(symbol.upper(symbol.strip(symbol)))
+        coin_id = COIN_SYMBOL_ID.get(symbol.strip().upper())
         _url = self.homeUrl + symbol
         if coin_id:
             _url = self.homeUrl + coin_id
@@ -61,7 +62,7 @@ class CoinMarketCap:
                 _map = _map + _tmp
             if 'last_updated' in jsonobj:
                 _tmp = "\n time:%s" % (
-                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(long(jsonobj['last_updated']))))
+                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(jsonobj['last_updated']))))
                 _map = _map + _tmp
             return _map
 

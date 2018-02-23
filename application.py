@@ -20,14 +20,14 @@ from wxpy import *
 TULING_KEY = '12f1fc86573e49498efe7882746aa66d'
 
 # 初始化微信机器人
-#bot = Bot(cache_path=True, console_qr=True)
+bot = Bot(cache_path=True, console_qr=True)
 
 # 初始化tuling 机器人
 # tuling = Tuling(api_key=TULING_KEY)
 
 # 进行测试的好友
-#my_friend = ensure_one(bot.search('龙光'))
-#print(my_friend)
+my_friend = ensure_one(bot.search('龙光'))
+print(my_friend)
 
 ba = Binance()
 okex = OKEX()
@@ -55,7 +55,7 @@ def query_price_by_exchange(_exchange, _symbol):
     return None
 
 
-#@bot.register(my_friend, TEXT)
+@bot.register(my_friend, TEXT)
 def auto_reply_coin_price(msg):
     return auto_query_coin_price(msg)
 
@@ -122,10 +122,10 @@ def test():
     print(auto_query_coin_price('中文试试'))
 
 
-test()
+# test()
 
 
 # 堵塞线程，并进入 Python 命令行
 # embed()
 # 阻塞进程
-# bot.join()
+bot.join()
