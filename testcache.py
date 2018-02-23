@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from redisservice import cache
-
+import random
+import time
 
 @cache
 def foo(n):
@@ -26,11 +27,19 @@ def foo(n):
 # print _i_eth
 # print _i_btc
 
-symbol = 'EOSBTC/BA/PRICE'
-symbol2 = 'EOSBTC/BA/PRICE 中文'
+# symbol = 'EOSBTC/BA/PRICE'
+# symbol2 = 'EOSBTC/BA/PRICE 中文'
+#
+# def judge_pure_english(keyword):
+#     return all(ord(c) < 128 for c in keyword)
+#
+# print(judge_pure_english(symbol))
+# print(judge_pure_english(symbol2))
 
-def judge_pure_english(keyword):
-    return all(ord(c) < 128 for c in keyword)
+print(random.randint(1, 30) / 10.0)
+print(random.randint(1, 30) / 10.0)
+print(random.randint(1, 30) / 10.0)
+print(random.randint(1, 30) / 10.0)
+print(random.randint(1, 30) / 10.0)
 
-print judge_pure_english(symbol)
-print judge_pure_english(symbol2)
+time.sleep(2.2)

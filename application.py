@@ -9,6 +9,8 @@ from coinmarketcap import CoinMarketCap
 from logger import Logger
 from config import EXCHANGES
 import re
+import time
+import random
 
 zh_pattern = re.compile(u'[\u4e00-\u9fa5]+')
 
@@ -57,7 +59,9 @@ def query_price_by_exchange(_exchange, _symbol):
 
 @bot.register(my_friend, TEXT)
 def auto_reply_coin_price(msg):
-    return auto_query_coin_price(msg)
+    # 增加延迟
+    time.sleep(random.randint(1, 30) / 10.0)
+    return auto_query_coin_price(msg.text)
 
 
 def judge_pure_english(keyword):
