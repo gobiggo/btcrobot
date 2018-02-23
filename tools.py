@@ -6,7 +6,7 @@ import socket
 import json
 from logger import Logger
 import requests
-from urllib.parse import urlencode, quote_plus
+import urllib2
 
 # reload(sys)
 # sys.setdefaultencoding("utf-8")
@@ -42,8 +42,7 @@ def http_get_request(url, params, add_to_headers=None):
     }
     if add_to_headers:
         headers.update(add_to_headers)
-    # postdata = urllib.urlencode(params)
-    postdata = urlencode(params, quote_via=quote_plus)
+    postdata = urllib.urlencode(params)
     try:
         response = requests.get(url, postdata, headers=headers, timeout=TIMEOUT)
         return response.json()
@@ -86,14 +85,12 @@ class Tools:
         self.logging.info("request url:%s", url)
         _data = None
         if query_object is not None:
-            #_data = urllib.urlencode(query_object)
-            _data = urlencode(query_object, quote_via=quote_plus)
-        # req = urllib2.Request(url, data=_data, headers=self.headers)
-        # req = urllib.request.Request(url, data=_data, headers=self.headers)
+            _data = urllib.urlencode(query_object)
+
+        req = urllib2.Request(url, data=_data, headers=self.headers)
         try:
-            response = requests.get(url, _data, headers=self.headers, timeout=TIMEOUT).json()
-            # response = urllib2.urlopen(req, timeout=10).read()
-        except urllib.error.HTTPError as e:
+            response = urllib2.urlopen(req, timeout=10).read()
+        except urllib2.HTTPError as e:
             error_message = e.read()
             if error_message:
                 self.logging.error("===request error,error_message:%s", error_message)
@@ -102,7 +99,7 @@ class Tools:
             else:
                 self.logging.error("===request error")
             return None
-        except urllib.error.URLError as e:
+        except urllib2.URLError as e:
             if isinstance(e.reason, socket.timeout):
                 self.logging.error("===request error,request timeout")
             else:
@@ -111,4 +108,4 @@ class Tools:
                 else:
                     self.logging.error("===request error")
             return None
-        return response
+        return json.loads(response)

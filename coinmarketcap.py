@@ -13,7 +13,7 @@ class CoinMarketCap:
 
     # @cache
     def get_coin_price_api(self, symbol):
-        coin_id = COIN_SYMBOL_ID.get(symbol.upper(symbol.strip(symbol)))
+        coin_id = COIN_SYMBOL_ID.get(symbol.strip().upper())
         _url = self.homeUrl + symbol
         if coin_id:
             _url = self.homeUrl + coin_id
