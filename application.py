@@ -20,14 +20,14 @@ from wxpy import *
 TULING_KEY = '12f1fc86573e49498efe7882746aa66d'
 
 # 初始化微信机器人
-#bot = Bot(cache_path=True, console_qr=True)
+bot = Bot(cache_path=True, console_qr=True)
 
 # 初始化tuling 机器人
 # tuling = Tuling(api_key=TULING_KEY)
 
 # 进行测试的好友
-#my_friend = ensure_one(bot.search('龙光'))
-#print(my_friend)
+my_friend = ensure_one(bot.search('大龙'))
+print(my_friend)
 
 ba = Binance()
 okex = OKEX()
@@ -55,9 +55,9 @@ def query_price_by_exchange(_exchange, _symbol):
     return None
 
 
-#@bot.register(my_friend, TEXT)
+@bot.register(my_friend, TEXT)
 def auto_reply_coin_price(msg):
-    return auto_query_coin_price(msg)
+    return auto_query_coin_price(msg.text)
 
 
 def judge_pure_english(keyword):
@@ -93,7 +93,7 @@ def auto_query_coin_price(msg):
     """
     if not judge_pure_english(msg):
         return
-    if msg == '__help':
+    if msg == '--help':
         return '<交易对>/<交易所>/<功能>/<功能参数>\n交易对:<基础货币>_<报价货币>\n交易所:HB,BA,OK,ZB,CMC\n功能:PRICE/DEPTH\n功能参数:limit=10/50/100'
 
     logger.info(msg)
@@ -116,7 +116,7 @@ def test():
     print(auto_query_coin_price('/EOSBTC/OK/PRICE'))
     print(auto_query_coin_price('BTC/CMC/PRICE'))
     print(auto_query_coin_price('NAS'))
-    print(auto_query_coin_price('__help'))
+    print(auto_query_coin_price('--help'))
     print(auto_query_coin_price('NASETH/HB'))
     print(auto_query_coin_price('NASETH/HB/DEPTH'))
     print(auto_query_coin_price('中文试试'))
@@ -126,6 +126,6 @@ test()
 
 
 # 堵塞线程，并进入 Python 命令行
-# embed()
+embed()
 # 阻塞进程
 # bot.join()
