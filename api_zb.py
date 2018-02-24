@@ -32,33 +32,32 @@ class ZB:
             "date": "1519355461791"
         }
         """
-        _map = " exchange:zb\n symbol:%s" % coin_market
+        _map = "exchange:\tzb\n ..symbol:\t%s" % _symbol
 
         if objs and ('ticker' in objs):
             jsonobj = objs['ticker']
             if 'last' in jsonobj:
-                _tmp = "\n price:%s" % jsonobj['last']
+                _tmp = "\n ...price:\t%s" % jsonobj['last']
                 _map = _map + _tmp
             if 'buy' in jsonobj:
-                _tmp = "\n buy:%s" % jsonobj['buy']
+                _tmp = "\n .....buy:\t%s" % jsonobj['buy']
                 _map = _map + _tmp
             if 'sell' in jsonobj:
-                _tmp = "\n sell:%s" % jsonobj['sell']
+                _tmp = "\n ....sell:\t%s" % jsonobj['sell']
                 _map = _map + _tmp
             if 'high' in jsonobj:
-                _tmp = "\n high_24h:%s" % jsonobj['high']
+                _tmp = "\n high_24h:\t%s" % jsonobj['high']
                 _map = _map + _tmp
             if 'low' in jsonobj:
-                _tmp = "\n low_24h:%s" % jsonobj['low']
+                _tmp = "\n .low_24h:\t%s" % jsonobj['low']
                 _map = _map + _tmp
             if 'vol' in jsonobj:
-                _tmp = "\n vol_24h:%s" % jsonobj['vol']
+                _tmp = "\n .vol_24h:\t%s" % jsonobj['vol']
                 _map = _map + _tmp
 
             if 'date' in objs:
                 _time = objs['date']
-                # _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(_time)/1000)))
-                _map = _map + "\n time:%s" % (time.strftime("%H:%M:%S", time.localtime(int(_time) / 1000)))
+                _map = _map + "\n ....time:\t%s" % (time.strftime("%H:%M:%S", time.localtime(int(_time))))
             return _map
         else:
             return "cannot query the price of %s from zb" % _symbol

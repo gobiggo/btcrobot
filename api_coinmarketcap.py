@@ -37,35 +37,33 @@ class CoinMarketCap:
             "last_updated": "1519289669"
         }]
         """
-        _map = " exchange:CoinMarketCap"
+        _map = " exchange:\tCoinMarketCap"
         if (objs is not None) and len(objs) > 0:
             jsonobj = objs[0]
             if 'symbol' in jsonobj:
-                _tmp = " symbol:%s" % jsonobj['symbol']
+                _tmp = "\n ...symbol:\t%s" % jsonobj['symbol']
                 _map = _map + _tmp
             if 'price_usd' in jsonobj:
-                _tmp = "\n price_usd:%s" % jsonobj['price_usd']
+                _tmp = "\n price_usd:\t%s" % jsonobj['price_usd']
                 _map = _map + _tmp
             if 'price_btc' in jsonobj:
-                _tmp = "\n price_btc:%s" % jsonobj['price_btc']
+                _tmp = "\n price_btc:\t%s" % jsonobj['price_btc']
                 _map = _map + _tmp
             if 'percent_change_1h' in jsonobj:
-                _tmp = "\n change_1h:%.2f%%" % float(jsonobj['percent_change_1h'])
+                _tmp = "\n change_1h:\t%.2f%%" % float(jsonobj['percent_change_1h'])
                 _map = _map + _tmp
             if 'percent_change_24h' in jsonobj:
-                _tmp = "\n change_24h:%.2f%%" % float(jsonobj['percent_change_24h'])
+                _tmp = "\n change_1d:\t%.2f%%" % float(jsonobj['percent_change_24h'])
                 _map = _map + _tmp
             if 'percent_change_7d' in jsonobj:
-                _tmp = "\n change_7d:%.2f%%" % float(jsonobj['percent_change_7d'])
+                _tmp = "\n change_7d:\t%.2f%%" % float(jsonobj['percent_change_7d'])
                 _map = _map + _tmp
             if 'last_updated' in jsonobj:
-                _tmp = "\n time:%s" % (
-                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(jsonobj['last_updated']))))
+                _tmp = "\n last_time:\t%s" % (time.strftime("%H:%M:%S", time.localtime(int(jsonobj['last_updated']))))
                 _map = _map + _tmp
             return _map
 
         else:
             return "cannot query the price of %s (query by coin-id,not symbol) from CoinMarketCap" % symbol
 
-
-#print CoinMarketCap().get_coin_price_api('verge')
+# print CoinMarketCap().get_coin_price_api('verge')

@@ -19,7 +19,7 @@ class Binance:
 
         最后统一 大写，然后替换下划线
         """
-        self.logging.info('binance query:%s', symbol)
+        # self.logging.info('binance query:%s', symbol)
         # symbol = symbol.lower(symbol.strip(symbol))
         symbol = symbol.strip().lower()
         coin_market = symbol
@@ -28,18 +28,15 @@ class Binance:
             # 当作usdt 交易对处理，程序自动加上usdt进行查询
             coin_market = symbol + 'usdt'
 
-        # print coin_market
         # 币安交易对都是大写
         objs = get_price(coin_market.upper().replace('_', ''))
-        # print objs
-
         """
         {
           "symbol": "LTCBTC",
           "price": "4.00000200"
         }
         """
-        _map = " exchange:binance\n symbol:%s" % coin_market
+        _map = "exchange:\tbinance\n ..symbol:\t%s" % coin_market
 
         if objs:
             if ('status' in objs) and (objs['status'] != 'ok'):
@@ -48,7 +45,7 @@ class Binance:
                 return 'cannot query the price of %s from binance, msg=%s' % (coin_market,objs['msg'])
             jsonobj = objs
             if 'price' in jsonobj:
-                _tmp = "\n price:%s" % jsonobj['price']
+                _tmp = "\n ...price: \t%s" % jsonobj['price']
                 _map = _map + _tmp
             return _map
         else:

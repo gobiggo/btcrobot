@@ -59,13 +59,13 @@ def auto_query_coin_price(msg):
     """
     if not judge_pure_english(msg):
         return
-    if msg.index(':') != 0:
+    if msg.find(':') != 0:
         return
     if msg == ':help':
         return ':<交易对>/<交易所> 或者 :<交易对>/<功能>/<功能参数>\n交易对:<基础货币>_<报价货币>\n交易所:HB,BA,OK,ZB,CMC' \
                '\n功能:KLINE/DEPTH\n功能参数:limit=10/50/100'
 
-    _strs = msg.replace(':', '').split('/')
+    _strs = msg.replace(':', '').upper().split('/')
     _len = len(_strs)
     if _len == 1:
         # 直接查询价格
@@ -79,17 +79,3 @@ def auto_query_coin_price(msg):
         _function = _strs[1]
         return "敬请期待"
 
-
-def test():
-    print(auto_query_coin_price(':EOS_BC/BA'))
-    print(auto_query_coin_price(':EOSBTC/'))
-    print(auto_query_coin_price('eOS_BTC/ZB'))
-    print(auto_query_coin_price(':/EOSBTC/OK'))
-    print(auto_query_coin_price(':BTC/CMC'))
-    print(auto_query_coin_price(':NAS'))
-    print(auto_query_coin_price(':help'))
-    print(auto_query_coin_price(':NASETH/HB'))
-    print(auto_query_coin_price(':NASETH/HB/DEPTH'))
-    print(auto_query_coin_price(':中文试试'))
-
-test()
