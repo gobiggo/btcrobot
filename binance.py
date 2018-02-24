@@ -1,21 +1,16 @@
 # -*- coding: utf-8 -*-
 
-"""
-https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
-@QQ      : 583748826
-"""
-from redisservice import cache
 from logger import Logger
-import string
 from binance_service import *
+
 
 class Binance:
     def __init__(self):
         self.logging = Logger().get_log()
 
-    # @cache
     def get_coin_price_api(self, symbol):
         """
+        https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
         symbol 默认请求格式 eth_usdt（统一），huobi实际查询 ethusdt
         symbol处理逻辑如下：
         1. 如果是usdt结尾，直接查询
@@ -24,7 +19,7 @@ class Binance:
 
         最后统一 大写，然后替换下划线
         """
-
+        self.logging.info('binance query:%s', symbol)
         # symbol = symbol.lower(symbol.strip(symbol))
         symbol = symbol.strip().lower()
         coin_market = symbol

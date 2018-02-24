@@ -1,17 +1,15 @@
-from redisservice import cache
 from tools import Tools
 from logger import Logger
 from config import COIN_SYMBOL_ID
-import string
+from config import CMC_API_URL
 import time
 
 
 class CoinMarketCap:
     def __init__(self):
         self.logging = Logger().get_log()
-        self.homeUrl = 'https://api.coinmarketcap.com/v1/ticker/'
+        self.homeUrl = CMC_API_URL
 
-    # @cache
     def get_coin_price_api(self, symbol):
         # coin_id = COIN_SYMBOL_ID.get(symbol.upper(symbol.strip(symbol)))
         coin_id = COIN_SYMBOL_ID.get(symbol.strip().upper())

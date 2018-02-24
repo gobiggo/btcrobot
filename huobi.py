@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from redisservice import cache
 from logger import Logger
-import string
 import time
 from huobi_service import *
 
@@ -11,7 +9,6 @@ class HuoBi:
     def __init__(self):
         self.logging = Logger().get_log()
 
-    # @cache
     def get_coin_price_api(self, symbol):
         # https://api.huobi.pro/market/trade?symbol=ethusdt
         """
@@ -59,7 +56,7 @@ class HuoBi:
             }
         }}
         """
-        _map = " exchange:huobi\n symbol:%s" % coin_market
+        _map = " exchange:\t huobi\n symbol:\t %s" % coin_market
 
         if objs and ('status' in objs):
             if objs['status'] != 'ok':
@@ -73,14 +70,14 @@ class HuoBi:
                 return 'query %s failed' % coin_market
             jsonobj = ticker['data'][0]
             if 'price' in jsonobj:
-                _tmp = "\n price:%f" % jsonobj['price']
+                _tmp = "\n price:\t %f" % jsonobj['price']
                 _map = _map + _tmp
             if 'amount' in jsonobj:
-                _tmp = "\n amount:%s" % jsonobj['amount']
+                _tmp = "\n amount:\t %s" % jsonobj['amount']
                 _map = _map + _tmp
             if 'ts' in jsonobj:
                 _time = jsonobj['ts']
-                _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(_time) / 1000)))
+                _map = _map + "\n time:\t %s" % (time.strftime("%H:%M:%S", time.localtime(int(_time) / 1000)))
             return _map
         else:
             return "cannot query the price of %s from huobi" % coin_market

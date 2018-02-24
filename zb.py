@@ -1,17 +1,15 @@
-from redisservice import cache
 from tools import Tools
 from logger import Logger
 from config import ZB_COIN_MARKET_USDT
-import string
+from config import ZB_API_URL
 import time
 
 
 class ZB:
     def __init__(self):
         self.logging = Logger().get_log()
-        self.homeUrl = 'http://api.zb.com/data/v1/ticker'
+        self.homeUrl = ZB_API_URL
 
-    # @cache
     def get_coin_price_api(self, symbol):
         # http://api.zb.com/data/v1/ticker?market=btc_usdt
         _symbol = symbol.strip().upper()
@@ -59,7 +57,8 @@ class ZB:
 
             if 'date' in objs:
                 _time = objs['date']
-                _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(_time)/1000)))
+                # _map = _map + "\n time:%s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(_time)/1000)))
+                _map = _map + "\n time:%s" % (time.strftime("%H:%M:%S", time.localtime(int(_time) / 1000)))
             return _map
         else:
             return "cannot query the price of %s from zb" % _symbol

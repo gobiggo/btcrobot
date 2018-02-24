@@ -1,6 +1,22 @@
 # -*- coding: utf-8 -*-
 
-import sys
+EXCHANGES = ('HB', 'BA', 'OK', 'ZB', 'CMC')
+FUNCTIONS = ('DEPTH', 'KLINE')
+
+BA_MARKET_URL = 'https://api.binance.com'
+
+# huobi API 请求地址
+HB_API_HOST = "https://api.huobi.pro"
+HB_MARKET_URL = HB_TRADE_URL = "https://api.huobi.pro"
+
+# zb.com API地址
+ZB_API_URL = 'http://api.zb.com/data/v1/ticker'
+
+# CMC API地址
+CMC_API_URL = 'https://api.coinmarketcap.com/v1/ticker/'
+
+# OKAPI 地址
+OK_API_URL = 'https://www.okex.com/api/v1/ticker.do'
 
 COIN_SYMBOL_ID = {"BTC": "bitcoin"
     , "ETH": "ethereum"
@@ -56,11 +72,3 @@ HB_COIN_MARKET_USDT = {"BTC": "btc_usdt"
     , "NEO": "neo_usdt"
     , "XEM": "xem_usdt"
     , "BTS": "bts_usdt"}
-
-EXCHANGES = ('HB', 'BA', 'OK', 'ZB','CMC')
-
-BA_MARKET_URL = 'https://api.binance.com'
-
-# huobi API 请求地址
-HB_API_HOST = "https://api.huobi.pro"
-HB_MARKET_URL = HB_TRADE_URL = "https://api.huobi.pro"

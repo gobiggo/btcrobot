@@ -1,20 +1,17 @@
-from redisservice import cache
 from tools import http_get_request
 from logger import Logger
 from config import OK_COIN_MARKET_USDT
-import string
+from config import OK_API_URL
 import time
-
 
 
 class OKEX:
     def __init__(self):
         self.logging = Logger().get_log()
-        self.homeUrl = 'https://www.okex.com/api/v1/ticker.do'
+        self.homeUrl = OK_API_URL
 
-    # @cache
     def get_coin_price_api(self, symbol):
-        #_symbol = symbol.upper(symbol.strip(symbol))
+        # _symbol = symbol.upper(symbol.strip(symbol))
         _symbol = symbol.strip().upper()
         coin_market = OK_COIN_MARKET_USDT.get(_symbol)
         _data = {'symbol': _symbol}
@@ -69,5 +66,3 @@ class OKEX:
             return "cannot query the price of %s from okex" % _symbol
         else:
             return "cannot query the price of %s from okex" % _symbol
-
-# print OKEX().get_coin_price_api('eth')
