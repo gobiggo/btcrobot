@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from logger import Logger
-from binance_service import *
+from service_binance import *
 
 
 class Binance:

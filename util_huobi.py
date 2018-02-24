@@ -8,8 +8,8 @@ import datetime
 
 import urlparse
 from config import HB_TRADE_URL as TRADE_URL
-from tools import http_get_request
-from tools import http_post_request
+from util_tools import http_get_request
+from util_tools import http_post_request
 
 # 此处填写APIKEY
 

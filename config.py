@@ -6,8 +6,7 @@ FUNCTIONS = ('DEPTH', 'KLINE')
 BA_MARKET_URL = 'https://api.binance.com'
 
 # huobi API 请求地址
-HB_API_HOST = "https://api.huobi.pro"
-HB_MARKET_URL = HB_TRADE_URL = "https://api.huobi.pro"
+HB_API_HOST = HB_MARKET_URL = HB_TRADE_URL = "https://api.huobi.pro"
 
 # zb.com API地址
 ZB_API_URL = 'http://api.zb.com/data/v1/ticker'
@@ -15,9 +14,10 @@ ZB_API_URL = 'http://api.zb.com/data/v1/ticker'
 # CMC API地址
 CMC_API_URL = 'https://api.coinmarketcap.com/v1/ticker/'
 
-# OKAPI 地址
+# OK API 地址
 OK_API_URL = 'https://www.okex.com/api/v1/ticker.do'
 
+# CMC SYMBOL_ID 对应关系（部分
 COIN_SYMBOL_ID = {"BTC": "bitcoin"
     , "ETH": "ethereum"
     , "XRP": "ripple"
@@ -29,6 +29,7 @@ COIN_SYMBOL_ID = {"BTC": "bitcoin"
     , "QTUM": "qtum"
     , "ETC": "ethereum-classic"}
 
+# ZB SYMBOL_USDT 对应关系
 ZB_COIN_MARKET_USDT = {"BTC": "btc_usdt"
     , "ETH": "eth_usdt"
     , "XRP": "xrp_usdt"
@@ -41,7 +42,8 @@ ZB_COIN_MARKET_USDT = {"BTC": "btc_usdt"
     , "ETC": "etc_usdt"
     , "BTS": "bts_usdt"}
 
-# btc_usdt eth_usdt ltc_usdt etc_usdt bch_usdt qtum_usdt hsr_usdt neo_usdt gas_usdt
+
+# OK SYMBOL_USDT 对应关系
 OK_COIN_MARKET_USDT = {"BTC": "btc_usdt"
     , "ETH": "eth_usdt"
     , "XRP": "xrp_usdt"
@@ -55,6 +57,7 @@ OK_COIN_MARKET_USDT = {"BTC": "btc_usdt"
     , "NEO": "neo_usdt"
     , "GAS": "gas_usdt"}
 
+# huobi SYMBOL_USDT 对应关系
 HB_COIN_MARKET_USDT = {"BTC": "btc_usdt"
     , "ETH": "eth_usdt"
     , "XRP": "xrp_usdt"

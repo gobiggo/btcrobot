@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from binance import Binance
-from huobi import HuoBi
-from okex import OKEX
-from zb import ZB
-from coinmarketcap import CoinMarketCap
+from api_binance import Binance
+from api_huobi import HuoBi
+from api_okex import OKEX
+from api_zb import ZB
+from api_coinmarketcap import CoinMarketCap
 from config import EXCHANGES
 from config import FUNCTIONS
 import re

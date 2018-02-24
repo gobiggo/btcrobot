@@ -1,4 +1,4 @@
-from tools import http_get_request
+from util_tools import http_get_request
 from logger import Logger
 from config import OK_COIN_MARKET_USDT
 from config import OK_API_URL

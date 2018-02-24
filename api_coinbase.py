@@ -1,4 +1,4 @@
-from coinbase.wallet.client import Client
+from api_coinbase.wallet.client import Client
 
 client = Client('', '', api_version='2018-01-01')
 

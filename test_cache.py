@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from redisservice import cache
+from service_redis import cache
 import random
 import time
 

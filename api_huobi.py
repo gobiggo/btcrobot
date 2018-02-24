@@ -2,7 +2,7 @@
 
 from logger import Logger
 import time
-from huobi_service import *
+from service_huobi import *
 
 
 class HuoBi:
