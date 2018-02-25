@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import json
 from util_tools import get_request
-from util_tools import html_replace_char
 from logger import Logger
-from config import WALLS_CN_LIVE_URL
+from config import SPD_WALLS_CN_LIVE_URL
 from config import DEFAULT_ENCODING
 
 
-class Spider_Walls_Live:
+class SpiderWallsLive:
     def __init__(self):
         self.logging = Logger().get_log()
-        self.homeUrl = WALLS_CN_LIVE_URL
+        self.homeUrl = SPD_WALLS_CN_LIVE_URL
         self.encoding = DEFAULT_ENCODING
 
     def get_news(self):
@@ -72,11 +70,11 @@ class Spider_Walls_Live:
             _article['desc'] = article_item['content']
             _article['time'] = article_item['display_time']
 
-            # finance.caixin.com/2018-02-24/101213298.html 取 101213298
-            _article['_cursor'] = article_item['1161517']
+            _article['_cursor'] = article_item['id']
             return _article
-        except Exception:
+        except Exception as e:
+            print(e)
             return None
 
 
-print(Spider_Walls_Live().get_news())
+# print(SpiderWallsLive().get_news())

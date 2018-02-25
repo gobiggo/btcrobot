@@ -4,14 +4,14 @@ import json
 from util_tools import get_request
 from util_tools import html_replace_char
 from logger import Logger
-from config import WALLS_CN_URL
+from config import SPD_WALLS_CN_URL
 from config import DEFAULT_ENCODING
 
 
-class Spider_Walls:
+class SpiderWalls:
     def __init__(self):
         self.logging = Logger().get_log()
-        self.homeUrl = WALLS_CN_URL
+        self.homeUrl = SPD_WALLS_CN_URL
         self.encoding = DEFAULT_ENCODING
 
     def get_news(self):
@@ -68,4 +68,4 @@ class Spider_Walls:
             return None
 
 
-print(Spider_Walls().get_news())
+# print(SpiderWalls().get_news())

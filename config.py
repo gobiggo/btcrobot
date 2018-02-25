@@ -85,7 +85,9 @@ DEFAULT_ENCODING = 'utf-8'
 # caixin.com
 SPD_CAIXIN_URL = 'http://finance.caixin.com/'
 
+# yicai
+SPD_YICAI_URL = 'http://www.yicai.com/news/jinrong/'
 
 # wallstreetcn
-WALLS_CN_URL = 'https://api-prod.wallstreetcn.com/apiv1/content/articles?category=global&limit=5'
-WALLS_CN_LIVE_URL = 'https://api-prod.wallstreetcn.com/apiv1/content/lives?channel=blockchain-channel&limit=5'
+SPD_WALLS_CN_URL = 'https://api-prod.wallstreetcn.com/apiv1/content/articles?category=global&limit=5'
+SPD_WALLS_CN_LIVE_URL = 'https://api-prod.wallstreetcn.com/apiv1/content/lives?channel=blockchain-channel&limit=5'
