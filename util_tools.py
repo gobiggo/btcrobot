@@ -6,6 +6,7 @@ import json
 from logger import Logger
 import requests
 from urllib.parse import urlencode, quote_plus
+import re
 
 # timeout in 5 seconds:
 TIMEOUT = 5
@@ -30,6 +31,21 @@ DEFAULT_POST_HEADERS = {
 
 
 # 各种请求,获取数据方式
+def get_request(url, params=None, add_to_headers=None):
+    headers = {
+        "Content-type": "application/x-www-form-urlencoded",
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0'
+    }
+    if add_to_headers:
+        headers.update(add_to_headers)
+    try:
+        response = requests.get(url, params, headers=headers, timeout=TIMEOUT)
+        return response
+    except Exception as e:
+        print("httpGet failed, detail is:%s" % e)
+        return "fail"
+
+
 def http_get_request(url, params, add_to_headers=None):
     headers = {
         "Content-type": "application/x-www-form-urlencoded",
@@ -69,6 +85,31 @@ def http_post_request(url, params, add_to_headers=None):
     except Exception as e:
         print("httpPost failed, detail is:%s" % e)
         return {"status": "fail", "msg": e}
+
+
+# 用 非贪婪模式 匹配 \t 或者\n 或者 空格超链接 和图片
+BgnCharToNoneRex = re.compile("(\t|\n|\r| |<a.*?>|<img.*?>)")  # 用 非贪婪模式 陪 任意 <>
+EndCharToNoneRex = re.compile("<.*?>")
+
+# 用 非贪婪模式匹配 任意 <p> 标签
+BgnPartRex = re.compile("<p.*?>")
+CharToNewLineRex = re.compile("(<br />|</p>|<tr>|<div>|</div>)")
+CharToNewTabRex = re.compile("<td>")
+
+# 将一些html符号尸体转变为原始符号
+replaceTab = [("<", "<"), (">", ">"), ("&", "&"), ("&", "\""), (" ", " ")]
+
+
+def html_replace_char(x):
+    x = BgnCharToNoneRex.sub("", x)
+    x = BgnPartRex.sub("\n    ", x)
+    x = CharToNewLineRex.sub("\n", x)
+    x = CharToNewTabRex.sub("\t", x)
+    x = EndCharToNoneRex.sub("", x)
+
+    for t in replaceTab:
+        x = x.replace(t[0], t[1])
+    return x
 
 
 class Tools:

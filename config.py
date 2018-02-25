@@ -42,7 +42,6 @@ ZB_COIN_MARKET_USDT = {"BTC": "btc_usdt"
     , "ETC": "etc_usdt"
     , "BTS": "bts_usdt"}
 
-
 # OK SYMBOL_USDT 对应关系
 OK_COIN_MARKET_USDT = {"BTC": "btc_usdt"
     , "ETH": "eth_usdt"
@@ -75,3 +74,18 @@ HB_COIN_MARKET_USDT = {"BTC": "btc_usdt"
     , "NEO": "neo_usdt"
     , "XEM": "xem_usdt"
     , "BTS": "bts_usdt"}
+
+# -------- spider -------
+FILTER_KEYWORDS = (
+'比特', '区块','链圈', '代币', '数字资产', '数字货币', '虚拟货币', '加密货币', '山寨币', 'ico', 'ICO', 'btc', 'bitcoin', 'BTC', 'BITCOIN')
+
+DEFAULT_ENCODING = 'utf-8'
+
+
+# caixin.com
+SPD_CAIXIN_URL = 'http://finance.caixin.com/'
+
+
+# wallstreetcn
+WALLS_CN_URL = 'https://api-prod.wallstreetcn.com/apiv1/content/articles?category=global&limit=5'
+WALLS_CN_LIVE_URL = 'https://api-prod.wallstreetcn.com/apiv1/content/lives?channel=blockchain-channel&limit=5'
