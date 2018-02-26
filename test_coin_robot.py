@@ -23,4 +23,8 @@ def test():
     printx(auto_query_coin_price(':NASETH/HB/DEPTH'))
     printx(auto_query_coin_price(':中文试试'))
 
-test()
+def testx():
+    printx(auto_query_coin_price(':help'))
+    printx(auto_query_coin_price(':ETH'))
+
+testx()

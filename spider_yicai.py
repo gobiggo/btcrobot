@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-
 
-import json
 from bs4 import BeautifulSoup
 from util_tools import get_request
 from util_tools import html_replace_char
 from logger import Logger
 from config import SPD_YICAI_URL
 from config import DEFAULT_ENCODING
-
-
-_DEFAULT_ENCODING='gb2312'
+from service_spider_common import filter_news
+from service_spider_common import save_cursor
 
 class SpiderYiCai:
     def __init__(self):
         self.logging = Logger().get_log()
         self.homeUrl = SPD_YICAI_URL
         self.encoding = DEFAULT_ENCODING
+        self.redis_key = 'yicai'
 
     def get_news(self):
         response = get_request(self.homeUrl)
@@ -23,11 +22,17 @@ class SpiderYiCai:
         _article_list = soup.select('div #news_List > dl')[:5]
 
         _allow_return_list = []
+        _article_cursor = []
         for item in _article_list:
             _article = self._handle_article_item(item)
-            print(_article)
-            # 1. _cursor > history_index
-            # 2. desc 含 关键词
+            _article_cursor.append(int(_article['_cursor']))
+            # print(int(_article['_cursor']))
+            # print(_article['title'])
+            if filter_news(self.redis_key, _article):
+                _allow_return_list.append(_article)
+        # print('max ----- %d' % max(_article_cursor))
+        save_cursor(self.redis_key, max(_article_cursor))
+        return _allow_return_list
 
     @staticmethod
     def _handle_article_item(article_item):
@@ -53,4 +58,4 @@ class SpiderYiCai:
             return None
 
 
-print(SpiderYiCai().get_news())
+# SpiderYiCai().get_news()

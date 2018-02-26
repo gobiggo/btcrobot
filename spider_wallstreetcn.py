@@ -6,13 +6,15 @@ from util_tools import html_replace_char
 from logger import Logger
 from config import SPD_WALLS_CN_URL
 from config import DEFAULT_ENCODING
-
+from service_spider_common import filter_news
+from service_spider_common import save_cursor
 
 class SpiderWalls:
     def __init__(self):
         self.logging = Logger().get_log()
         self.homeUrl = SPD_WALLS_CN_URL
         self.encoding = DEFAULT_ENCODING
+        self.redis_key = 'wallstreetcn'
 
     def get_news(self):
         # https://api-prod.wallstreetcn.com/apiv1/content/articles?
@@ -43,10 +45,19 @@ class SpiderWalls:
         """
         if jsonobj and ('message' in jsonobj) and (jsonobj['message'] == 'OK'):
             _article_list = jsonobj['data']['items']
+
+            _allow_return_list = []
+            _article_cursor = []
             for item in _article_list:
                 _article = self._handle_article_item(item)
-                print(_article)
-            #
+                _article_cursor.append(int(_article['_cursor']))
+                # print(int(_article['_cursor']))
+                # print(_article['title'])
+                if filter_news(self.redis_key, _article):
+                    _allow_return_list.append(_article)
+            # print('max ----- %d' % max(_article_cursor))
+            save_cursor(self.redis_key, max(_article_cursor))
+            return _allow_return_list
 
     @staticmethod
     def _handle_article_item(article_item):
@@ -68,4 +79,4 @@ class SpiderWalls:
             return None
 
 
-# print(SpiderWalls().get_news())
+SpiderWalls().get_news()

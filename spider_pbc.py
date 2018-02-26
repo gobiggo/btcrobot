@@ -1,39 +1,33 @@
 # -*- coding: utf-8 -*-
 
+import json
 from bs4 import BeautifulSoup
 from util_tools import get_request
 from util_tools import html_replace_char
 from logger import Logger
-from config import SPD_CAIXIN_URL
+from config import SPD_PBC_URL
 from config import DEFAULT_ENCODING
-from service_spider_common import filter_news
-from service_spider_common import save_cursor
 
 
-class SpiderCaixin:
+class SpiderPBC:
     def __init__(self):
         self.logging = Logger().get_log()
-        self.homeUrl = SPD_CAIXIN_URL
+        self.homeUrl = SPD_PBC_URL
         self.encoding = DEFAULT_ENCODING
-        self.redis_key = 'caixin'
 
     def get_news(self):
         response = get_request(self.homeUrl)
+        print(response.text)
         soup = BeautifulSoup(response.text, 'lxml')
-        _article_list = soup.select('div #listArticle > div[class*=boxa]')
+        _article_list = soup.select('font[class*=newslist_style]')
 
         _allow_return_list = []
-        _article_cursor = []
         for item in _article_list:
-            _article = self._handle_article_item(item)
-            _article_cursor.append(int(_article['_cursor']))
-            # print(int(_article['_cursor']))
-            # print(_article['title'])
-            if filter_news(self.redis_key, _article):
-                _allow_return_list.append(_article)
-        #print('max ----- %d' % max(_article_cursor))
-        save_cursor(self.redis_key, max(_article_cursor))
-        return _allow_return_list
+            # _article = self._handle_article_item(item)
+            # print(_article)
+            print(item.get_text())
+            # 1. _cursor > history_index
+            # 2. desc 含 关键词
 
     @staticmethod
     def _handle_article_item(article_item):
@@ -55,11 +49,8 @@ class SpiderCaixin:
             _last_index = _article['url'][_start:_end]
             _article['_cursor'] = _last_index
             return _article
-        except:
+        except Exception:
             return None
 
-#save_cursor('caixin', 1)
-# arts = SpiderCaixin().get_news()
-#
-# for art in arts:
-#     print(art['title'])
+
+SpiderPBC().get_news()

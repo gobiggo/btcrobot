@@ -7,7 +7,10 @@ from api_zb import ZB
 from api_coinmarketcap import CoinMarketCap
 from config import EXCHANGES
 from config import FUNCTIONS
+from service_redis_cache import RedisCache
+from service_redis_cache import redis_cached
 import re
+import time
 
 zh_pattern = re.compile(u'[\u4e00-\u9fa5]+')
 
@@ -17,6 +20,8 @@ huobi = HuoBi()
 zb = ZB()
 coincap = CoinMarketCap()
 
+db = RedisCache('robot_coin')
+
 
 def judge_pure_english(keyword):
     try:
@@ -25,7 +30,8 @@ def judge_pure_english(keyword):
         return False
 
 
-def query_price_by_exchange(_exchange, _symbol):
+@redis_cached(db, ex=8)
+def query_price_by_exchange(_exchange=None, _symbol=None):
     if _symbol and _exchange and len(_symbol) > 2 and len(_exchange) > 1:
         if 'HB' == _exchange:
             return huobi.get_coin_price_api(_symbol)
@@ -57,6 +63,7 @@ def auto_query_coin_price(msg):
     :param msg: 查询的交易对等参数
     :return: 
     """
+    time.sleep(1)
     if not judge_pure_english(msg):
         return
     if msg.find(':') != 0:
@@ -69,7 +76,7 @@ def auto_query_coin_price(msg):
     _len = len(_strs)
     if _len == 1:
         # 直接查询价格
-        return ba.get_coin_price_api(_strs[0])
+        return query_price_by_exchange("BA", _strs[0])
     if _len == 2 and (_strs[1] in EXCHANGES):
         _symbol = _strs[0]
         _exchange = _strs[1]
@@ -78,4 +85,3 @@ def auto_query_coin_price(msg):
         _symbol = _strs[0]
         _function = _strs[1]
         return "敬请期待"
-

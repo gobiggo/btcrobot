@@ -4,15 +4,13 @@ from util_tools import get_request
 from logger import Logger
 from config import SPD_WALLS_CN_LIVE_URL
 from config import DEFAULT_ENCODING
-from service_spider_common import filter_live
-from service_spider_common import save_cursor
+
 
 class SpiderWallsLive:
     def __init__(self):
         self.logging = Logger().get_log()
         self.homeUrl = SPD_WALLS_CN_LIVE_URL
         self.encoding = DEFAULT_ENCODING
-        self.redis_key = 'wallstreetcn_live'
 
     def get_news(self):
         # https://api-prod.wallstreetcn.com/apiv1/content/lives?channel=blockchain-channel&limit=1
@@ -54,18 +52,10 @@ class SpiderWallsLive:
         """
         if jsonobj and ('message' in jsonobj) and (jsonobj['message'] == 'OK'):
             _article_list = jsonobj['data']['items']
-            _allow_return_list = []
-            _article_cursor = []
             for item in _article_list:
                 _article = self._handle_article_item(item)
-                _article_cursor.append(int(_article['_cursor']))
-                # print(int(_article['_cursor']))
-                # print(_article['title'])
-                if filter_live(self.redis_key, _article):
-                    _allow_return_list.append(_article)
-            # print('max ----- %d' % max(_article_cursor))
-            save_cursor(self.redis_key, max(_article_cursor))
-            return _allow_return_list
+                print(_article)
+            #
 
     @staticmethod
     def _handle_article_item(article_item):
@@ -73,7 +63,7 @@ class SpiderWallsLive:
             _article = {}
 
             _article['_type'] = 'live'
-            _article['_source'] = 'wallstreetcn_live'
+            _article['_source'] = 'cailian'
             _article['url'] = None
             _article['title'] = None
             _article['remark'] = None
@@ -87,4 +77,4 @@ class SpiderWallsLive:
             return None
 
 
-SpiderWallsLive().get_news()
+# print(SpiderWallsLive().get_news())

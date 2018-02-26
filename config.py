@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+REDIS_HOST = '10.10.1.252'
+REDIS_PORT = 6379
+REDIS_DB = 0
+
 EXCHANGES = ('HB', 'BA', 'OK', 'ZB', 'CMC')
 FUNCTIONS = ('DEPTH', 'KLINE')
 
@@ -91,3 +95,9 @@ SPD_YICAI_URL = 'http://www.yicai.com/news/jinrong/'
 # wallstreetcn
 SPD_WALLS_CN_URL = 'https://api-prod.wallstreetcn.com/apiv1/content/articles?category=global&limit=5'
 SPD_WALLS_CN_LIVE_URL = 'https://api-prod.wallstreetcn.com/apiv1/content/lives?channel=blockchain-channel&limit=5'
+
+# cailianpress
+SPD_CAILIAN_URL = 'https://www.cailianpress.com/'
+
+# pbc
+SPD_PBC_URL = 'http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html'
