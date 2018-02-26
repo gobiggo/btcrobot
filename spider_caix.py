@@ -30,6 +30,7 @@ class SpiderCaixin:
             # print(int(_article['_cursor']))
             # print(_article['title'])
             if filter_news(self.redis_key, _article):
+                print(_article['title'])
                 _allow_return_list.append(_article)
         #print('max ----- %d' % max(_article_cursor))
         save_cursor(self.redis_key, max(_article_cursor))
@@ -59,6 +60,7 @@ class SpiderCaixin:
             return None
 
 #save_cursor('caixin', 1)
+#save_cursor('wallstreetcn', 1)
 # arts = SpiderCaixin().get_news()
 #
 # for art in arts:

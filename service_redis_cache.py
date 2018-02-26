@@ -18,15 +18,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def singleton(cls, *args, **kw):
-    instances = {}
 
-    def _singleton():
-        if cls not in instances:
-            instances[cls] = cls(*args, **kw)
-        return instances[cls]
-
-    return _singleton
 
 
 # @singleton()
@@ -86,7 +78,7 @@ class RedisCache(object):
                     result = func()
                     if result is not None:
                         result = self.SERIALIZER.dumps(result)
-                    self.db.setex(key, result, self.max_expires)
+                    self.db.setex(key, result, ex)
             finally:
                 self.LOCKER.remove(key)
         try:

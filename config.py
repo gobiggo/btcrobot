@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
-REDIS_HOST = '10.10.1.252'
+REDIS_HOST = '127.0.0.1'
 REDIS_PORT = 6379
 REDIS_DB = 0
+
+EMAIL_RECEIVERS = ['583748826@qq.com']
+EMAIL_SENDER = 'sloong@yeah.net'
+EMAIL_PWD = 'po000po000'
+EMAIL_SMTP = 'smtp.yeah.net'
 
 EXCHANGES = ('HB', 'BA', 'OK', 'ZB', 'CMC')
 FUNCTIONS = ('DEPTH', 'KLINE')

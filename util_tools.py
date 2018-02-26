@@ -9,7 +9,7 @@ from urllib.parse import urlencode, quote_plus
 import re
 
 # timeout in 5 seconds:
-TIMEOUT = 5
+TIMEOUT = 10
 
 SCHEME = 'https'
 
@@ -111,6 +111,15 @@ def html_replace_char(x):
         x = x.replace(t[0], t[1])
     return x
 
+
+def singleton(cls, *args, **kw):
+    instances = {}
+
+    def _singleton():
+        if cls not in instances:
+            instances[cls] = cls(*args, **kw)
+        return instances[cls]
+    return _singleton
 
 class Tools:
     def __init__(self):

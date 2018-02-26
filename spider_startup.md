@@ -18,5 +18,5 @@ crontab命令
 ```
   
 
-0,2 6-22 * * * * /usr/bin/python /data/btc_robot/mail_live_spider.py
-0,10 6-20 * * * /usr/bin/python /data/btc_robot/mail_news_spider.py
+0,2 6-24 * * * * /usr/bin/python /data/btc_robot/robot_spider_live.py
+0,10 6-24 * * * /usr/bin/python /data/btc_robot/robot_spider.py

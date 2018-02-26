@@ -9,6 +9,7 @@ from config import DEFAULT_ENCODING
 from service_spider_common import filter_news
 from service_spider_common import save_cursor
 
+
 class SpiderWalls:
     def __init__(self):
         self.logging = Logger().get_log()
@@ -79,4 +80,4 @@ class SpiderWalls:
             return None
 
 
-SpiderWalls().get_news()
+# SpiderWalls().get_news()

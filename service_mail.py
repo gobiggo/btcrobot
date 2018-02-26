@@ -2,36 +2,85 @@
 
 import smtplib
 from smtplib import SMTPException
+# from email import encoders
+from email.header import Header
+from email.mime.text import MIMEText
+from email.utils import parseaddr, formataddr
+from config import EMAIL_RECEIVERS
+from config import EMAIL_SENDER
+from config import EMAIL_SMTP
+from config import EMAIL_PWD
+from util_tools import singleton
+from logger import Logger
 
-message = """From: From Person <from@fromdomain.com>
-To: To Person <to@todomain.com>
-MIME-Version: 1.0
-Content-type: text/html
-Subject: SMTP HTML e-mail test
+def _format_addr(s):
+    name, _addr = parseaddr(s)
+    return formataddr((Header(name, 'utf-8').encode(), _addr))
 
-This is an e-mail message to be sent in HTML format
 
-<b>This is HTML message.</b>
-<h1>This is headline.</h1>
-"""
+@singleton
+class MailService:
+    def __init__(self):
+        self.news_template = "<p><a href='%s'>%s</a><br/>[%s] %s</p>"
+        self.live_template = "<p>%s</p>"
+        self.html_template = "<html><body>%s<div>+微信：shuishuile</div></body></html>"
+        self.logger = Logger().get_log()
 
-sender = 'slg927@gmail.com'
-receivers = ['sloong@yeah.net']
+    def send_email(self, _articles=None):
+        if _articles and len(_articles) > 0:
+            _receivers = ','.join(EMAIL_RECEIVERS)
+            # print(_receivers)
+            html_msg = self.build_up_html(_articles)
+            # print(html_msg)
 
-# server = smtplib.SMTP('smtp.gmail.com', 587)
-# server.starttls()
-# server.login("YOUR EMAIL ADDRESS", "YOUR PASSWORD")
-#
-# msg = "YOUR MESSAGE!"
-# server.sendmail("YOUR EMAIL ADDRESS", "THE EMAIL ADDRESS TO SEND TO", msg)
-# server.quit()
+            msg = MIMEText(html_msg, 'html', 'utf-8')
+            msg['From'] = _format_addr('NewsSpider Robot v1.0 <%s>' % EMAIL_SENDER)
+            msg['To'] = _format_addr('收件人 <%s>' % _receivers[0])
+            msg['Subject'] = Header(_articles[0]['title'], 'utf-8').encode()
+            try:
+                server = smtplib.SMTP(EMAIL_SMTP)
+                server.login(EMAIL_SENDER, EMAIL_PWD)
+                server.sendmail(EMAIL_SENDER, _receivers, msg.as_string())
+                self.logger.info("发送邮件成功")
+            except SMTPException as e:
+                self.logger.error(e)
+        else:
+            self.logger.info("本次没有news")
 
-try:
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(sender, "1QA2WS3ED")
-    server.sendmail(sender, receivers, message)
-    print("Successfully sent email")
-except SMTPException:
-   print("Error: unable to send email")
+    def send_live_email(self, _articles=None):
+        if _articles and len(_articles) > 0:
+            _receivers = ','.join(EMAIL_RECEIVERS)
+            # print(_receivers)
+            html_msg = self.build_up_live_html(_articles)
+            # print(html_msg)
 
+            msg = MIMEText(html_msg, 'html', 'utf-8')
+            msg['From'] = _format_addr('NewsSpider Robot v1.0 <%s>' % EMAIL_SENDER)
+            msg['To'] = _format_addr('收件人 <%s>' % _receivers[0])
+            msg['Subject'] = '共 %d 条新快讯，敬请查看' % len(_articles)
+            try:
+                server = smtplib.SMTP(EMAIL_SMTP)
+                server.login(EMAIL_SENDER, EMAIL_PWD)
+                server.sendmail(EMAIL_SENDER, _receivers, msg.as_string())
+                self.logger.info("发送邮件成功")
+            except SMTPException as e:
+                self.logger.error(e)
+        else:
+            self.logger.info("本次没有live消息")
+
+    def build_up_html(self, _articles):
+        content = []
+        for article in _articles:
+            _str = self.news_template % (article['url'], article['title'], article['remark'], article['desc'])
+            content.append(_str)
+
+        return self.html_template % (''.join(content))
+
+    def build_up_live_html(self, _articles):
+        content = []
+        for article in _articles:
+            if 'desc' in article:
+                _str = self.live_template % (article['desc'])
+                content.append(_str)
+
+        return self.html_template % (''.join(content))

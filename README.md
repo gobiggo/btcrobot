@@ -1,4 +1,7 @@
+### vultr 不能发邮件
 
+    本地可以发送邮件，但是通过vultr 服务器怎么也发不出了，总是报连接超时
+    telnet smtp.163.com 25
 
 ### 安装python3
 
@@ -21,6 +24,10 @@
 
     # redis 操作 https://www.jianshu.com/p/2639549bedc8
     pip install redis
+    
+    /usr/local/bin/redis-server /etc/redis.conf
+    keys * 
+    flushdb
     
     pip install coinbase
     

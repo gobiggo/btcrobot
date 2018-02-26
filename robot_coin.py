@@ -30,7 +30,7 @@ def judge_pure_english(keyword):
         return False
 
 
-@redis_cached(db, ex=8)
+@redis_cached(db, ex=60)
 def query_price_by_exchange(_exchange=None, _symbol=None):
     if _symbol and _exchange and len(_symbol) > 2 and len(_exchange) > 1:
         if 'HB' == _exchange:

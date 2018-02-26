@@ -27,4 +27,4 @@ def testx():
     printx(auto_query_coin_price(':help'))
     printx(auto_query_coin_price(':ETH'))
 
-testx()
+test()
