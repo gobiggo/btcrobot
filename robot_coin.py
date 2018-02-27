@@ -62,6 +62,11 @@ def function_coin(_func, _symbol, arg3=None):
     return None
 
 
+@redis_cached(db, ex=60)
+def global_coin():
+    return coincap.get_coin_global_api()
+
+
 def auto_query_coin_price(msg):
     """
     自动报价
@@ -80,13 +85,18 @@ def auto_query_coin_price(msg):
     time.sleep(1)
     if not judge_pure_english(msg):
         return
+
+    msg = msg.strip().upper()
     if msg.find(':') != 0:
         return
-    if msg == ':help':
+    if msg == ':HELP':
         return ':<交易对>/<交易所> 或者 :<交易对>/<功能>/<功能参数>\n交易对:<基础货币>_<报价货币>\n交易所:HB,BA,OK,ZB,CMC' \
-               '\n功能:KLINE/DEPTH/GLOBAL\n功能参数:limit=10/50/100'
+               '\n功能:KLINE/DEPTH\n功能参数:limit=10/50/100'
 
-    _strs = msg.replace(':', '').upper().split('/')
+    if ':GLOBAL' == msg:
+        return global_coin()
+
+    _strs = msg.replace(':', '').split('/')
     _len = len(_strs)
     if _len == 1:
         # 直接查询价格

@@ -49,18 +49,22 @@
 - wxpy 拦截注册（是否可以动态给群加register
 - 配置文件动态更新（通过文件助手、我个人微信)
 - tools 方法重构
-- 增加coin 挂单深度查询
+
 
 ## ChangLog
 
-2.23 wechat robot
-2.23 zb & coinmarkket coin报价
-2.23 wechat robot 模拟人类，增加一定随机延时
-2.24 转换为python3 以及 项目重构
-2.24 增加okex、binance、huobi的coin price
+2.23 微信机器人定义
+2.23 新增对zb & coinmarkket 等平台的coin报价
+2.23 修改wechat robot 回复随机延时机制，模拟人类
+2.24 项目重构，同时支持python3 以及 python2
+2.24 增加对okex、binance、huobi交易所的货币币价查询
 2.24 定义查询币价的通用格式
-2.25 增加spider: caixin、wallstreetcn、wallstreetcn_live 
-2.26 增加spider: yicai
-2.26 查询币价的api 增加缓存cache
-2.26 spider 增加关键词过滤
-2.26 增加定时crontab 服务
+2.25 新增爬虫: 财新网(caixin)、一财网(yicai)
+2.26 新增爬虫: 华尔街见闻(wallstreetcn)、华尔街见闻快讯(wallstreetcn_live)
+2.26 增加缓存机制：所有查询币价的api 增加缓存cache机制
+2.26 新闻和快讯爬虫 增加关键词过滤（区块链等关键词)
+2.26 增加定时启动机制 服务
+2.27 增加smtp邮件推送服务
+2.27 增加coin 挂单深度查询
+2.27 新增 全球加密货币总市值查询
+

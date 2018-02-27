@@ -25,7 +25,8 @@ def test():
     printx(auto_query_coin_price(':中文试试'))
 
 def testx():
-    printx(auto_query_coin_price(':help'))
-    printx(auto_query_coin_price(':ETH'))
+    # printx(auto_query_coin_price(':help'))
+    # printx(auto_query_coin_price(':ETH_usdt/depth'))
+    printx(auto_query_coin_price(':GLOBAL'))
 
-test()
+testx()

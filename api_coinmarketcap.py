@@ -15,10 +15,10 @@ class CoinMarketCap:
         _url = self.homeUrl + "global"
         if convert:
             _url = self.homeUrl + "global/?convert=%s"
-        objs = get_request(_url).text()
+        objs = get_request(_url).json()
         """
         {
-            "total_market_cap_usd": 453165692235.0, 
+            "total_market_cap_usd": 4531 65692235.0, 
             "total_24h_volume_usd": 19241568080.0, 
             "bitcoin_percentage_of_market_cap": 38.73, 
             "active_currencies": 902, 
@@ -27,7 +27,13 @@ class CoinMarketCap:
             "last_updated": 1519717469
         }
         """
-        return objs.replace("{", "").replace("}", "").replace(',', '\n')
+        if objs and 'active_currencies' in objs:
+            total_cap_usd = float(objs['total_market_cap_usd']) / 100000000
+            volume_24h_usd = float(objs['total_24h_volume_usd']) / 100000000
+            percent_btc = objs['bitcoin_percentage_of_market_cap']
+            last_time = (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(objs['last_updated']))))
+            return "总市值:%.2f亿美元,24小时交易额:%.2f亿美元,BTC所占份额:%s%%,更新时间:%s" % (total_cap_usd, volume_24h_usd, percent_btc, last_time)
+        return '未查到相关信息'
 
     def get_coin_price_api(self, symbol):
         # coin_id = COIN_SYMBOL_ID.get(symbol.upper(symbol.strip(symbol)))

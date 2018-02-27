@@ -10,7 +10,7 @@ EMAIL_PWD = 'po000po000'
 EMAIL_SMTP = 'smtp.yeah.net'
 
 EXCHANGES = ('HB', 'BA', 'OK', 'ZB', 'CMC')
-FUNCTIONS = ('DEPTH', 'KLINE', 'GLOBAL')
+FUNCTIONS = ('DEPTH', 'KLINE')
 
 BA_MARKET_URL = 'https://api.binance.com'
 
