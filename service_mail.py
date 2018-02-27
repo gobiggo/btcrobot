@@ -12,6 +12,8 @@ from config import EMAIL_SMTP
 from config import EMAIL_PWD
 from util_tools import singleton
 from logger import Logger
+from api_binance import get_price
+
 
 def _format_addr(s):
     name, _addr = parseaddr(s)
@@ -33,10 +35,13 @@ class MailService:
             html_msg = self.build_up_html(_articles)
             # print(html_msg)
 
+            jsonobj = get_price("BTCUSDT")
+            btc_price = jsonobj['price']
+
             msg = MIMEText(html_msg, 'html', 'utf-8')
-            msg['From'] = _format_addr('NewsSpider Robot v1.0 <%s>' % EMAIL_SENDER)
+            msg['From'] = _format_addr('共 %d 条新闻，敬请查看 <%s>' % (len(_articles), EMAIL_SENDER))
             msg['To'] = _format_addr('收件人 <%s>' % _receivers[0])
-            msg['Subject'] = Header(_articles[0]['title'], 'utf-8').encode()
+            msg['Subject'] = Header("币安BTC当前报价:%s" % btc_price, 'utf-8').encode()
             try:
                 server = smtplib.SMTP(EMAIL_SMTP)
                 server.login(EMAIL_SENDER, EMAIL_PWD)
@@ -54,10 +59,13 @@ class MailService:
             html_msg = self.build_up_live_html(_articles)
             # print(html_msg)
 
+            jsonobj = get_price("BTCUSDT")
+            btc_price = jsonobj['price']
+
             msg = MIMEText(html_msg, 'html', 'utf-8')
-            msg['From'] = _format_addr('NewsSpider Robot v1.0 <%s>' % EMAIL_SENDER)
+            msg['From'] = _format_addr('共 %d 条新快讯，敬请查看 <%s>' % (len(_articles), EMAIL_SENDER))
             msg['To'] = _format_addr('收件人 <%s>' % _receivers[0])
-            msg['Subject'] = '共 %d 条新快讯，敬请查看' % len(_articles)
+            msg['Subject'] = "币安BTC当前报价:%s" % btc_price
             try:
                 server = smtplib.SMTP(EMAIL_SMTP)
                 server.login(EMAIL_SENDER, EMAIL_PWD)

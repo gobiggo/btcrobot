@@ -62,7 +62,7 @@ class SpiderWallsLive:
                 #print(int(_article['_cursor']))
                 #print(_article['desc'])
                 if filter_live(self.redis_key, _article):
-                    print(_article['desc'])
+                    # print(_article['desc'])
                     _allow_return_list.append(_article)
             # print('max ----- %d' % max(_article_cursor))
 

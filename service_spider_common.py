@@ -39,7 +39,7 @@ def filter_live(spider_key, _article=None):
 
         if _history_index is None:
             _history_index = -1
-        print('%d , %d ' % (_cursor, _history_index))
+        # print('%d , %d ' % (_cursor, _history_index))
         if _cursor > _history_index:
             return True
     return False
