@@ -18,17 +18,19 @@ my_friend = ensure_one(bot.search('龙光'))
 print(my_friend)
 
 # 进行测试的
-# my_group = bot.groups().search('wxpy 交流群')[0]
-# print(my_group)
+my_group = bot.groups().search('北纬28')[0]
+print(my_group)
+
 
 @bot.register(my_friend, TEXT)
-def auto_reply_coin_price(msg):
+def auto_reply_one_friend(msg):
     # 增加延迟
     time.sleep(random.randint(1, 30) / 10.0)
     return auto_query_coin_price(msg.text)
 
-# @bot.register(Friend, TEXT)
-def auto_reply_all_friend(msg):
+
+@bot.register(my_group, TEXT)
+def auto_reply_group(msg):
     # 增加延迟
     time.sleep(random.randint(1, 30) / 10.0)
     return auto_query_coin_price(msg.text)

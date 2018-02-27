@@ -30,7 +30,7 @@ def judge_pure_english(keyword):
         return False
 
 
-@redis_cached(db, ex=60)
+@redis_cached(db, ex=30)
 def query_price_by_exchange(_exchange=None, _symbol=None):
     if _symbol and _exchange and len(_symbol) > 2 and len(_exchange) > 1:
         if 'HB' == _exchange:
@@ -45,6 +45,17 @@ def query_price_by_exchange(_exchange=None, _symbol=None):
             return coincap.get_coin_price_api(_symbol)
         else:
             return coincap.get_coin_price_api(_symbol)
+
+    return None
+
+
+@redis_cached(db, ex=30)
+def function_coin(_func, _symbol, arg3=None):
+    if _symbol and _func and len(_symbol) > 2 and len(_func) > 1:
+        if 'DEPTH' == _func.upper():
+            return ba.get_coin_depth(_symbol, arg3)
+        elif 'KLINE' == _func:
+            return "敬请期待"
 
     return None
 
@@ -82,6 +93,11 @@ def auto_query_coin_price(msg):
         _exchange = _strs[1]
         return query_price_by_exchange(_exchange, _symbol)
     if _len >= 2 and (_strs[1] in FUNCTIONS):
-        _symbol = _strs[0]
-        _function = _strs[1]
-        return "敬请期待"
+        _symbol = _strs[0].strip()
+        _function = _strs[1].strip()
+        _arg3 = None
+        if _len == 3:
+            _arg3 = _strs[2]
+
+        return function_coin(_function, _symbol, _arg3)
+

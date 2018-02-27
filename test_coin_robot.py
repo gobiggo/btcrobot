@@ -15,6 +15,7 @@ def test():
     printx(auto_query_coin_price(':NASETH/HB'))
     printx(auto_query_coin_price(':naseth/hb'))
     printx(auto_query_coin_price(':bts_BTC/ZB'))
+    printx(auto_query_coin_price(':VEN_ETH/DEPTH'))
     print('----------------None or Exception----------')
     printx(auto_query_coin_price(':EOS_BC/BA'))
     printx(auto_query_coin_price(':EOSBTC/'))

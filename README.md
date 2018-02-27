@@ -33,6 +33,8 @@
     
     pip install wxpy
     
+    pip install numpy
+    
 ### 爬虫依赖
 
     # 安装 BeautifulSoup & lxml
@@ -46,6 +48,8 @@
 - cmc symbol_bitid 抓取
 - wxpy 拦截注册（是否可以动态给群加register
 - 配置文件动态更新（通过文件助手、我个人微信)
+- tools 方法重构
+- 增加coin 挂单深度查询
 
 ## ChangLog
 

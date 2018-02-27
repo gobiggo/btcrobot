@@ -5,7 +5,7 @@ import socket
 import json
 from logger import Logger
 import requests
-from urllib.parse import urlencode, quote_plus
+# from urllib.parse import urlencode, quote_plus
 import re
 
 # timeout in 5 seconds:
@@ -53,9 +53,9 @@ def http_get_request(url, params, add_to_headers=None):
     }
     if add_to_headers:
         headers.update(add_to_headers)
-    postdata = urlencode(params, quote_via=quote_plus)
+    #postdata = urlencode(params, quote_via=quote_plus)
     try:
-        response = requests.get(url, postdata, headers=headers, timeout=TIMEOUT)
+        response = requests.get(url, params, headers=headers, timeout=TIMEOUT)
         return response.json()
         # if response.status_code == 200:
         #     return response.json()
@@ -129,11 +129,11 @@ class Tools:
 
     def request(self, url, query_object=None):
         self.logging.info("request url:%s", url)
-        _data = None
-        if query_object is not None:
-            _data = urlencode(query_object, quote_via=quote_plus)
+        # _data = None
+        # if query_object is not None:
+        #     _data = urlencode(query_object, quote_via=quote_plus)
         try:
-            response = requests.get(url, _data, headers=self.headers, timeout=TIMEOUT).json()
+            response = requests.get(url, query_object, headers=self.headers, timeout=TIMEOUT).json()
         except urllib.error.HTTPError as e:
             error_message = e.read()
             if error_message:
