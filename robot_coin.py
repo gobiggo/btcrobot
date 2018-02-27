@@ -52,10 +52,12 @@ def query_price_by_exchange(_exchange=None, _symbol=None):
 @redis_cached(db, ex=30)
 def function_coin(_func, _symbol, arg3=None):
     if _symbol and _func and len(_symbol) > 2 and len(_func) > 1:
-        if 'DEPTH' == _func.upper():
+        if 'DEPTH' == _func:
             return ba.get_coin_depth(_symbol, arg3)
         elif 'KLINE' == _func:
             return "敬请期待"
+        elif 'GLOBAL' == _func:
+            return coincap.get_coin_global_api()
 
     return None
 
@@ -71,6 +73,7 @@ def auto_query_coin_price(msg):
     # <功能> 格式为['KLINE','DEPTH']，分别代表k线和深度，功能模块均为BA(币安)的数据。
     # <功能参数> DEPTH[Limit] KLINE[itv={1m,1h,2h,4h,12h,1d,1w,1M}]
     # DEPTH limit=10/50/100, 并不返回全部详细数据，而是反馈所有挂单的总和，入limit=50 则返回 前50个买单和卖单 的数量总和
+    # GLOBAL 全球币市 的总价值
     :param msg: 查询的交易对等参数
     :return: 
     """
@@ -81,7 +84,7 @@ def auto_query_coin_price(msg):
         return
     if msg == ':help':
         return ':<交易对>/<交易所> 或者 :<交易对>/<功能>/<功能参数>\n交易对:<基础货币>_<报价货币>\n交易所:HB,BA,OK,ZB,CMC' \
-               '\n功能:KLINE/DEPTH\n功能参数:limit=10/50/100'
+               '\n功能:KLINE/DEPTH/GLOBAL\n功能参数:limit=10/50/100'
 
     _strs = msg.replace(':', '').upper().split('/')
     _len = len(_strs)

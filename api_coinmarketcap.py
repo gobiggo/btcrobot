@@ -1,4 +1,5 @@
 from util_tools import Tools
+from util_tools import get_request
 from logger import Logger
 from config import COIN_SYMBOL_ID
 from config import CMC_API_URL
@@ -10,10 +11,28 @@ class CoinMarketCap:
         self.logging = Logger().get_log()
         self.homeUrl = CMC_API_URL
 
+    def get_coin_global_api(self, convert='USD'):
+        _url = self.homeUrl + "global"
+        if convert:
+            _url = self.homeUrl + "global/?convert=%s"
+        objs = get_request(_url).text()
+        """
+        {
+            "total_market_cap_usd": 453165692235.0, 
+            "total_24h_volume_usd": 19241568080.0, 
+            "bitcoin_percentage_of_market_cap": 38.73, 
+            "active_currencies": 902, 
+            "active_assets": 589, 
+            "active_markets": 8791, 
+            "last_updated": 1519717469
+        }
+        """
+        return objs.replace("{", "").replace("}", "").replace(',', '\n')
+
     def get_coin_price_api(self, symbol):
         # coin_id = COIN_SYMBOL_ID.get(symbol.upper(symbol.strip(symbol)))
         coin_id = COIN_SYMBOL_ID.get(symbol.strip().upper())
-        _url = self.homeUrl + symbol
+        _url = self.homeUrl + "ticker/" + symbol
         if coin_id:
             _url = self.homeUrl + coin_id
 

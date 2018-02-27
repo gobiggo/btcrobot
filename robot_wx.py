@@ -18,7 +18,7 @@ my_friend = ensure_one(bot.search('龙光'))
 print(my_friend)
 
 # 进行测试的
-my_group = bot.groups().search('北纬28')[0]
+my_group = bot.groups(update=True).search('北纬28')[0]
 print(my_group)
 
 

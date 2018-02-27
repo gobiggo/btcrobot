@@ -10,7 +10,7 @@ EMAIL_PWD = 'po000po000'
 EMAIL_SMTP = 'smtp.yeah.net'
 
 EXCHANGES = ('HB', 'BA', 'OK', 'ZB', 'CMC')
-FUNCTIONS = ('DEPTH', 'KLINE')
+FUNCTIONS = ('DEPTH', 'KLINE', 'GLOBAL')
 
 BA_MARKET_URL = 'https://api.binance.com'
 
@@ -21,7 +21,7 @@ HB_API_HOST = HB_MARKET_URL = HB_TRADE_URL = "https://api.huobi.pro"
 ZB_API_URL = 'http://api.zb.com/data/v1/ticker'
 
 # CMC API地址
-CMC_API_URL = 'https://api.coinmarketcap.com/v1/ticker/'
+CMC_API_URL = 'https://api.coinmarketcap.com/v1/'
 
 # OK API 地址
 OK_API_URL = 'https://www.okex.com/api/v1/ticker.do'
@@ -86,10 +86,9 @@ HB_COIN_MARKET_USDT = {"BTC": "btc_usdt"
 
 # -------- spider -------
 FILTER_KEYWORDS = (
-'比特', '区块','链圈', '代币', '数字资产', '数字货币', '虚拟货币', '加密货币', '山寨币', 'ico', 'ICO', 'btc', 'bitcoin', 'BTC', 'BITCOIN')
+    '比特', '区块', '链圈', '代币', '数字资产', '数字货币', '虚拟货币', '加密货币', '山寨币', 'ico', 'ICO', 'btc', 'bitcoin', 'BTC', 'BITCOIN')
 
 DEFAULT_ENCODING = 'utf-8'
-
 
 # caixin.com
 SPD_CAIXIN_URL = 'http://finance.caixin.com/'
