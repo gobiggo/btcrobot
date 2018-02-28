@@ -46,7 +46,7 @@ def get_request(url, params=None, add_to_headers=None):
         return "fail"
 
 
-def http_get_request(url, params, add_to_headers=None):
+def http_get_request(url, params = None, add_to_headers=None):
     headers = {
         "Content-type": "application/x-www-form-urlencoded",
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0'

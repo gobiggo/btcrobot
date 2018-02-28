@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from util_tools import get_request
+from util_tools import http_get_request
 from util_tools import html_replace_char
 from logger import Logger
 from config import SPD_WALLS_CN_URL
@@ -20,8 +20,8 @@ class SpiderWalls:
     def get_news(self):
         # https://api-prod.wallstreetcn.com/apiv1/content/articles?
         # category=global&limit=20&cursor=1519530709,1519473979&platform=wscn-platform
-        response = get_request(self.homeUrl)
-        jsonobj = response.json()
+        # response =
+        jsonobj = http_get_request(self.homeUrl)
         """
         {"code":20000
         ,"message":"OK"

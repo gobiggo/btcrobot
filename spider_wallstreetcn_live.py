@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from util_tools import get_request
+from util_tools import http_get_request
 from logger import Logger
 from config import SPD_WALLS_CN_LIVE_URL
 from config import DEFAULT_ENCODING
 from service_spider_common import filter_live
 from service_spider_common import save_cursor
+
 
 class SpiderWallsLive:
     def __init__(self):
@@ -16,8 +17,9 @@ class SpiderWallsLive:
 
     def get_news(self):
         # https://api-prod.wallstreetcn.com/apiv1/content/lives?channel=blockchain-channel&limit=1
-        response = get_request(self.homeUrl)
-        jsonobj = response.json()
+        # response = get_request(self.homeUrl)
+        jsonobj = http_get_request(self.homeUrl,None)
+
         """
         {
             "code": 20000,
