@@ -16,7 +16,7 @@ def singleton(cls, *args, **kw):
 @singleton
 class Logger:
     def __init__(self):
-        logging.config.fileConfig("logger.conf")
+        logging.config.fileConfig("/data/btc_robot/logger.conf")
         self.logging = logging.getLogger("file01")
 
     def get_log(self):

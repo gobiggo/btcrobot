@@ -43,10 +43,11 @@ class MailService:
             msg['To'] = _format_addr('收件人 <%s>' % _receivers[0])
             msg['Subject'] = Header("币安BTC当前报价:%s" % btc_price, 'utf-8').encode()
             try:
-                server = smtplib.SMTP(EMAIL_SMTP)
+                # server = smtplib.SMTP(EMAIL_SMTP)
+                server = smtplib.SMTP_SSL(EMAIL_SMTP, '465')
                 server.login(EMAIL_SENDER, EMAIL_PWD)
                 server.sendmail(EMAIL_SENDER, _receivers, msg.as_string())
-                self.logger.info("发送邮件成功")
+                self.logger.info("发送news推送邮件成功")
             except SMTPException as e:
                 self.logger.error(e)
         else:
@@ -67,10 +68,11 @@ class MailService:
             msg['To'] = _format_addr('收件人 <%s>' % _receivers[0])
             msg['Subject'] = "币安BTC当前报价:%s" % btc_price
             try:
-                server = smtplib.SMTP(EMAIL_SMTP)
+                # server = smtplib.SMTP(EMAIL_SMTP)
+                server = smtplib.SMTP_SSL(EMAIL_SMTP, '465')
                 server.login(EMAIL_SENDER, EMAIL_PWD)
                 server.sendmail(EMAIL_SENDER, _receivers, msg.as_string())
-                self.logger.info("发送邮件成功")
+                self.logger.info("发送live推送邮件成功")
             except SMTPException as e:
                 self.logger.error(e)
         else:
