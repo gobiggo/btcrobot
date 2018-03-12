@@ -4,34 +4,38 @@ from wxpy import *
 import time
 import random
 from robot_coin import auto_query_coin_price
+from logger import Logger
 
+logger = Logger().get_log()
 TULING_KEY = '12f1fc86573e49498efe7882746aa66d'
 
 # 初始化微信机器人
 bot = Bot(cache_path=True, console_qr=True)
 
 # 初始化tuling 机器人
-# tuling = Tuling(api_key=TULING_KEY)
+tuling = Tuling(api_key=TULING_KEY)
 
 # 进行测试的好友
 my_friend = ensure_one(bot.search('龙光'))
-print(my_friend)
+logger.info(my_friend)
 
 # 进行测试的
 my_group = bot.groups(update=True).search('北纬28')[0]
-print(my_group)
+logger.info(my_group)
 
 
 @bot.register(my_friend, TEXT)
 def auto_reply_one_friend(msg):
     # 增加延迟
     time.sleep(random.randint(1, 30) / 10.0)
+    logger.info(msg)
     return auto_query_coin_price(msg.text)
 
 
 @bot.register(my_group, TEXT)
 def auto_reply_group(msg):
     # 增加延迟
+    logger.info(msg)
     time.sleep(random.randint(1, 30) / 10.0)
     return auto_query_coin_price(msg.text)
 

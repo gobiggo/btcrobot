@@ -56,7 +56,7 @@ class HuoBi:
             }
         }}
         """
-        _map = "exchange:\thuobi\n ..symbol:\t%s" % coin_market
+        _map = "交易所:\thuobi\n 交易对:\t%s" % coin_market
 
         if objs and ('status' in objs):
             if objs['status'] != 'ok':
@@ -70,14 +70,14 @@ class HuoBi:
                 return 'query %s failed' % coin_market
             jsonobj = ticker['data'][0]
             if 'price' in jsonobj:
-                _tmp = "\n ...price:\t%s" % jsonobj['price']
+                _tmp = "\n 当前价:\t%s" % jsonobj['price']
                 _map = _map + _tmp
             if 'amount' in jsonobj:
-                _tmp = "\n ..amount:\t%s" % jsonobj['amount']
+                _tmp = "\n 交易数:\t%s" % jsonobj['amount']
                 _map = _map + _tmp
             if 'ts' in jsonobj:
                 _time = jsonobj['ts']
-                _map = _map + ("\n ....time:\t%s" % (time.strftime("%H:%M:%S", time.localtime(int(_time) / 1000))))
+                _map = _map + ("\n #时间:\t%s" % (time.strftime("%H:%M:%S", time.localtime(int(_time) / 1000))))
             return _map
         else:
             return "cannot query the price of %s from huobi" % coin_market

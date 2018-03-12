@@ -32,32 +32,32 @@ class ZB:
             "date": "1519355461791"
         }
         """
-        _map = "exchange:\tzb\n ..symbol:\t%s" % _symbol
+        _map = "交易所:\tzb\n 交易对:\t%s" % _symbol
 
         if objs and ('ticker' in objs):
             jsonobj = objs['ticker']
             if 'last' in jsonobj:
-                _tmp = "\n ...price:\t%s" % jsonobj['last']
+                _tmp = "\n 当前价:\t%s" % jsonobj['last']
                 _map = _map + _tmp
             if 'buy' in jsonobj:
-                _tmp = "\n .....buy:\t%s" % jsonobj['buy']
+                _tmp = "\n 买一价:\t%s" % jsonobj['buy']
                 _map = _map + _tmp
             if 'sell' in jsonobj:
-                _tmp = "\n ....sell:\t%s" % jsonobj['sell']
+                _tmp = "\n 卖一价:\t%s" % jsonobj['sell']
                 _map = _map + _tmp
             if 'high' in jsonobj:
-                _tmp = "\n high_24h:\t%s" % jsonobj['high']
+                _tmp = "\n 24h最高:\t%s" % jsonobj['high']
                 _map = _map + _tmp
             if 'low' in jsonobj:
-                _tmp = "\n .low_24h:\t%s" % jsonobj['low']
+                _tmp = "\n 24h最低:\t%s" % jsonobj['low']
                 _map = _map + _tmp
             if 'vol' in jsonobj:
-                _tmp = "\n .vol_24h:\t%s" % jsonobj['vol']
+                _tmp = "\n 24h交易:\t%s 个" % jsonobj['vol']
                 _map = _map + _tmp
 
             if 'date' in objs:
                 _time = objs['date']
-                _map = _map + "\n ....time:\t%s" % (time.strftime("%H:%M:%S", time.localtime(int(_time))))
+                _map = _map + "\n #时间:\t%s" % (time.strftime("%H:%M:%S", time.localtime(int(_time))))
             return _map
         else:
             return "cannot query the price of %s from zb" % _symbol

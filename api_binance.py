@@ -39,7 +39,7 @@ class Binance:
           "price": "4.00000200"
         }
         """
-        _map = "exchange:\tbinance\n ..symbol:\t%s" % coin_market
+        _map = "交易所:\tbinance\n交易对:\t%s" % coin_market
 
         if objs:
             if ('status' in objs) and (objs['status'] != 'ok'):
@@ -48,7 +48,7 @@ class Binance:
                 return 'cannot query the price of %s from binance, msg=%s' % (coin_market, objs['msg'])
             jsonobj = objs
             if 'price' in jsonobj:
-                _tmp = "\n ...price: \t%s" % jsonobj['price']
+                _tmp = "\n当前价: \t%s" % jsonobj['price']
                 _map = _map + _tmp
             return _map
         else:

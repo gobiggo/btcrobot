@@ -11,6 +11,7 @@ from service_redis_cache import RedisCache
 from service_redis_cache import redis_cached
 import re
 import time
+from logger import Logger
 
 zh_pattern = re.compile(u'[\u4e00-\u9fa5]+')
 
@@ -21,6 +22,8 @@ zb = ZB()
 coincap = CoinMarketCap()
 
 db = RedisCache('robot_coin')
+
+logger = Logger().get_log()
 
 
 def judge_pure_english(keyword):
@@ -82,35 +85,38 @@ def auto_query_coin_price(msg):
     :param msg: 查询的交易对等参数
     :return: 
     """
-    time.sleep(1)
-    if not judge_pure_english(msg):
-        return
+    try:
+        if not judge_pure_english(msg):
+            return
 
-    msg = msg.strip().upper()
-    if msg.find(':') != 0:
-        return
-    if msg == ':HELP':
-        return ':<交易对>/<交易所> 或者 :<交易对>/<功能>/<功能参数>\n交易对:<基础货币>_<报价货币>\n交易所:HB,BA,OK,ZB,CMC' \
-               '\n功能:KLINE/DEPTH\n功能参数:limit=10/50/100'
+        msg = msg.strip().upper()
+        if not (msg.find(':') == 0 or msg.find('：') == 0):
+            return
+        msg = msg.replace('：', ':')
+        if msg == ':HELP':
+            return ':<交易对>/<交易所> 或者 :<交易对>/<功能>/<功能参数>\n交易对:<基础货币>_<报价货币>\n交易所:HB,BA,OK,ZB,CMC' \
+                   '\n功能:KLINE/DEPTH\n功能参数:limit=10/50/100'
 
-    if ':GLOBAL' == msg:
-        return global_coin()
+        if ':GLOBAL' == msg:
+            return global_coin()
 
-    _strs = msg.replace(':', '').split('/')
-    _len = len(_strs)
-    if _len == 1:
-        # 直接查询价格
-        return query_price_by_exchange("BA", _strs[0])
-    if _len == 2 and (_strs[1] in EXCHANGES):
-        _symbol = _strs[0]
-        _exchange = _strs[1]
-        return query_price_by_exchange(_exchange, _symbol)
-    if _len >= 2 and (_strs[1] in FUNCTIONS):
-        _symbol = _strs[0].strip()
-        _function = _strs[1].strip()
-        _arg3 = None
-        if _len == 3:
-            _arg3 = _strs[2]
+        _strs = msg.replace(':', '').split('/')
+        _len = len(_strs)
+        if _len == 1:
+            # 直接查询价格
+            return query_price_by_exchange("BA", _strs[0])
+        if _len == 2 and (_strs[1] in EXCHANGES):
+            _symbol = _strs[0]
+            _exchange = _strs[1]
+            return query_price_by_exchange(_exchange, _symbol)
+        if _len >= 2 and (_strs[1] in FUNCTIONS):
+            _symbol = _strs[0].strip()
+            _function = _strs[1].strip()
+            _arg3 = None
+            if _len == 3:
+                _arg3 = _strs[2]
 
-        return function_coin(_function, _symbol, _arg3)
-
+            return function_coin(_function, _symbol, _arg3)
+    except Exception as e:
+        logger.error(e)
+        return ""
